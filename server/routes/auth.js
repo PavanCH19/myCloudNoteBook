@@ -1,95 +1,110 @@
-const express = require('express');
-const app = express.Router();
-const { body, validationResult } = require('express-validator');
+const express = require("express");
+const { body, validationResult } = require("express-validator");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+
 const User = require("../modules/User");
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const env = require('dotenv');
-const fetchUser = require('../middleware/fetchUser');
-env.config();
+const fetchUser = require("../middleware/fetchUser");
 
-app.post('/createUser', [
-    //body('id', "Id must be 6 digits and unique").isLength({ min: 6 }),
-    body('name', "User name must be 3 characters or more").isLength({ min: 3 }),
-    body('email', "Enter a valid email").isEmail(),
-    body('password', "Password must be 8 characters or more").isLength({ min: 8 })
-], async (req, res) => {
-    const errors = validationResult(req);
+dotenv.config(); // Load environment variables
 
+const app = express(); // Initialize Express app
 
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
+// =======================================
+// Route: Create a New User
+// =======================================
+app.post("/createUser", [
+    body("name", "User name must be at least 3 characters").isLength({ min: 3 }),
+    body("email", "Enter a valid email").isEmail(),
+    body("password", "Password must be at least 8 characters").isLength({ min: 8 }),
+],
+    async (req, res) => {
+        // Validate user input
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
 
-    try {
-        const user = await User.findOne({ email: req.body.email });
+        try {
+            // Check if user already exists
+            const existingUser = await User.findOne({ email: req.body.email });
+            if (existingUser) {
+                return res.status(400).json({ msg: "User already exists" });
+            }
 
-        if (user) {
-            return res.status(400).json({ msg: "User already exists" });
-        } else {
-
+            // Hash the password
             const salt = await bcrypt.genSalt(10);
-            const hashPassword = await bcrypt.hashSync(req.body.password, salt);
+            const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
+            // Create a new user
             const newUser = await User.create({
                 name: req.body.name,
                 email: req.body.email,
-                password: hashPassword
+                password: hashedPassword,
             });
 
-            const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            // Generate JWT token
+            const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
-            return res.status(200).json({ msg: "User created", user: newUser, token });
+            res.status(201).json({ msg: "User created successfully", user: newUser, token });
+        } catch (error) {
+            console.error("Error creating user:", error);
+            res.status(500).json({ msg: "Server error" });
         }
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ msg: "Server error" });
     }
-});
+);
 
-//login endpoint
-app.post('/login', [
-    body('email', "Enter a valid email").isEmail(),
-    body('password', "Password is required").exists()
-], async (req, res) => {
-    const errors = validationResult(req);
+// =======================================
+// Route: User Login
+// =======================================
+app.post("/login", [
+    body("email", "Enter a valid email").isEmail(),
+    body("password", "Password is required").exists(),
+],
+    async (req, res) => {
+        // Validate user input
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
 
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
+        try {
+            // Check if user exists
+            const user = await User.findOne({ email: req.body.email });
+            if (!user) {
+                return res.status(400).json({ msg: "Invalid credentials" });
+            }
 
-    try {
-        const user = await User.findOne({ email: req.body.email });
-
-        if (!user) {
-            return res.status(400).json({ msg: "Invalid credentials" });
-        } else {
+            // Compare passwords
             const isMatch = await bcrypt.compare(req.body.password, user.password);
-
             if (!isMatch) {
                 return res.status(400).json({ msg: "Invalid credentials" });
-            } else {
-                const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-                return res.status(200).json({ msg: "User logged in", user, token });
             }
+
+            // Generate JWT token
+            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+
+            res.status(200).json({ msg: "User logged in successfully", user, token });
+        } catch (error) {
+            console.error("Error logging in:", error);
+            res.status(500).json({ msg: "Server error" });
         }
+    }
+);
+
+// =======================================
+// Route: Get User Details
+// =======================================
+app.post("/getUser", fetchUser, async (req, res) => {
+    try {
+        // Fetch user details excluding the password
+        const user = await User.findById(req.user.id).select("-password");
+        res.status(200).json({ user });
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ msg: "Server error" });
+        console.error("Error fetching user:", error);
+        res.status(500).json({ msg: "Server error" });
     }
 });
 
-//getUser
-app.post('/getUser', fetchUser, async (req, res) => {
-    console.log(req.user)
-    try {
-        const user = await User.findById(req.user.id).select('-password');
-        return res.status(200).json({ user });
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ msg: "Server error" });
-    }
-})
-
-module.exports = app;
+module.exports = app; // Export the app
