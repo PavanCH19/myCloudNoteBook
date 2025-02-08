@@ -1,9 +1,14 @@
+import Note from "./Note";
+
+
 const Home = () => {
+
+
     return (
         <>
-            <h1>Welcome to website</h1>
+            <Note />
         </>
     );
-}
+};
 
 export default Home;

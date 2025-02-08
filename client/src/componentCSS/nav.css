@@ -1,0 +1,173 @@
+/* Nav.css */
+
+/* Navbar Background and Container */
+.navbar-custom {
+    background-color: #343a40;
+    /* Dark background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    margin: 10px;
+    padding: 10px 20px;
+    /* Adjusted padding */
+    transition: all 0.3s ease;
+}
+
+.navbar-custom:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Navbar Brand */
+.navbar-brand-custom {
+    color: #ffc107 !important;
+    /* Yellow color */
+    font-weight: bold;
+    font-size: 1.8rem;
+    /* Adjusted font size */
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+.navbar-brand-custom:hover {
+    color: #ffdd33 !important;
+}
+
+/* Navbar Link */
+.nav-link-custom {
+    color: #f8f9fa !important;
+    /* Light color */
+    font-size: 1rem;
+    padding: 6px 15px;
+    /* Adjusted padding for better sizing */
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+
+.nav-link-custom.active {
+    color: #ffc107 !important;
+    font-weight: bold;
+}
+
+/* Profile Image */
+.profile-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #ffc107;
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+
+.profile-image:hover {
+    transform: scale(1.1);
+}
+
+/* Navbar Items Layout */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.navbar-nav-custom {
+    margin-right: 15px;
+}
+
+/* Navbar Toggle Button */
+.navbar-toggler {
+    background-color: #ffc107 !important;
+    /* Yellow background */
+    border: none;
+    padding: 6px 8px;
+    /* Reduced padding */
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    font-size: 1.2rem;
+    /* Reduced font size */
+}
+
+.navbar-toggler-icon {
+    background-color: #343a40;
+    /* Dark icon color */
+    width: 18px;
+    /* Reduced width of the icon */
+    height: 18px;
+    /* Reduced height of the icon */
+}
+
+/* Navbar Toggle Button Hover */
+.navbar-toggler:hover {
+    background-color: #ffdd33 !important;
+    /* Light yellow on hover */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 992px) {
+    .navbar-custom {
+        padding: 8px 15px;
+        /* Adjusted padding for medium screens */
+    }
+
+    .navbar-brand-custom {
+        font-size: 1.7rem;
+        /* Adjusted font size */
+    }
+
+    .nav-link-custom {
+        font-size: 0.95rem;
+        padding: 6px 12px;
+    }
+
+    .navbar-right {
+        margin-left: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-custom {
+        padding: 8px 12px;
+        /* Adjusted padding for smaller screens */
+    }
+
+    .navbar-brand-custom {
+        font-size: 1.6rem;
+        /* Adjusted font size */
+    }
+
+    .nav-link-custom {
+        padding: 8px 12px;
+    }
+
+    .profile-image {
+        width: 35px;
+        height: 35px;
+    }
+
+    .navbar-right {
+        margin-left: auto;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-custom {
+        padding: 6px 10px;
+        /* Adjusted padding for very small screens */
+    }
+
+    .navbar-brand-custom {
+        font-size: 1.5rem;
+        /* Adjusted font size */
+    }
+
+    .nav-link-custom {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+    }
+
+    .profile-image {
+        width: 30px;
+        height: 30px;
+    }
+}

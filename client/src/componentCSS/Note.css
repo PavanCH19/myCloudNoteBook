@@ -1,0 +1,80 @@
+/* General Notes Container */
+.notes-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: auto;
+    padding: 20px 0;
+    gap: 20px;
+    position: relative;
+    /* Make sure the container is relatively positioned */
+}
+
+/* Alert Box Styling */
+.alert-box {
+    background-color: #ffcccb;
+    color: #a94442;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Notes Content Styling */
+.notes-content {
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+}
+
+/* No Notes Message */
+.no-notes {
+    text-align: center;
+    font-weight: bold;
+    color: #6a1b9a;
+}
+
+/* Add Note Button (Plus Icon) Styling */
+.add-note-btn {
+    position: fixed;
+    /* Changed to fixed so it sticks to the screen */
+    bottom: 20px;
+    right: 20px;
+    background-color: #6a1b9a;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 2rem;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for add note button */
+.add-note-btn:hover {
+    background-color: #5a1372;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .notes-container {
+        flex-direction: column;
+    }
+
+    .notes-content {
+        grid-template-columns: 1fr;
+    }
+}
