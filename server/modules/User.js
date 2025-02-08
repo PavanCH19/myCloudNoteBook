@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const UserSchema = new Schema({
-    id: {
-        type: String,
-        default: () => new mongoose.Types.ObjectId().toString(), // Generates a unique ID as a string
-        unique: true,
-    },
+    // id: {
+    //     type: String,
+    //     default: () => new mongoose.Types.ObjectId().toString(), // Generates a unique ID as a string
+    //     unique: true,
+    // },
     name: {
         type: String,
         required: true
