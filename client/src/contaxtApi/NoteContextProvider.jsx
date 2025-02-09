@@ -129,7 +129,8 @@ const NoteContextProvider = ({ children }) => {
     console.log(modalType)
     console.log(editNote)
 
-    const handleNoteUpdate = (note) => {
+    const handleNoteUpdate = (Id, note) => {
+        console.log(Id);
         console.log(note);
     }
 
@@ -137,10 +138,14 @@ const NoteContextProvider = ({ children }) => {
         console.log(note);
     }
 
+    const handleAddNote = (note) => {
+        console.log(note);
+    }
+
 
 
     return (
-        <NoteContext.Provider value={{ notes, setNote, editNote, setEditNote, handleNoteDelete, handleNoteUpdate, modalType, setModalType }}>
+        <NoteContext.Provider value={{ notes, setNote, editNote, setEditNote, handleNoteDelete, handleNoteUpdate, modalType, setModalType, handleAddNote }}>
             {children}
         </NoteContext.Provider>
     );

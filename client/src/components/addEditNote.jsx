@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import context from "../contaxtApi/context";
 
 function AddEditNote() {
-    const { editNote, modalType } = useContext(context);
+    const { editNote, modalType, handleNoteUpdate, handleAddNote } = useContext(context);
 
 
     const [noteData, setNoteData] = useState({
@@ -35,6 +35,12 @@ function AddEditNote() {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("Submitted Note:", noteData);
+
+        if (modalType === "editNote") {
+            handleNoteUpdate(editNote._id, noteData);
+        } else if (modalType === "addNote") {
+            handleAddNote(noteData);
+        }
 
         setNoteData({ title: "", description: "", tag: "" });
     };
