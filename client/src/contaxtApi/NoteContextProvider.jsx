@@ -1,6 +1,6 @@
 import { useState } from "react";
 import NoteContext from "./context";
-import PropTypes from "Prop-Types";
+import PropTypes from "prop-types";
 
 const NoteContextProvider = ({ children }) => {
     const [notes, setNote] = useState([

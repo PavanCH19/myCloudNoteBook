@@ -1,37 +1,32 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import NoteContext from "../contaxtApi/context";
 import NoteItem from "./NoteItem";
 import "../componentCSS/Note.css";
+import NoteModel from "./noteModel"
 
 const Note = () => {
-    const { notes, setNotes } = useContext(NoteContext);
+    const { notes } = useContext(NoteContext);
     const [isNote] = useState(true);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading] = useState(false);
+    const [showNoteModel] = useState(true);
+    const [showModal, setShowModal] = useState(false);
+    const [modalType, setModalType] = useState("");
+    const [showNote, setShowNote] = useState(null);
 
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-    }, [setNotes]);
 
-    const handleNoteClick = (noteId) => {
-        // Action when a note is clicked (like opening it)
-        alert(`You clicked on note with ID: ${noteId}`);
+    const addNoteModal = () => {
+        setShowModal(true);
+        setModalType("addNote");
     };
 
-    const handleNoteUpdate = (noteId) => {
-        console.log(`Updating note with ID: ${noteId}`);
-        // Here you would usually navigate to the update page or show a form to update
+
+    const handleNoteClick = (note) => {
+        setShowModal(true);
+        setModalType("showNote");
+        setShowNote(note);
     };
 
-    const handleAddNote = () => {
-        console.log("Add a new note");
-    };
 
-    const handleNoteDelete = (noteId) => {
-        console.log(`Deleting note with ID: ${noteId}`);
-        // Logic to delete note goes here
-    };
 
     return (
         <>
@@ -44,12 +39,10 @@ const Note = () => {
                 <div className="notes-content">
                     {notes && notes.length > 0 ? (
                         notes.map((note) => (
-                            <div key={note._id} onClick={() => handleNoteClick(note._id)}>
+                            <div key={note._id} onClick={() => handleNoteClick(note)}>
                                 <NoteItem
                                     note={note}
                                     loading={isLoading}
-                                    handleNoteUpdate={handleNoteUpdate}
-                                    handleNoteDelete={handleNoteDelete}
                                 />
                             </div>
                         ))
@@ -59,9 +52,11 @@ const Note = () => {
                 </div>
 
                 {/* Add Note Button */}
-                <button className="add-note-btn" onClick={handleAddNote}>
+                <button className="add-note-btn" onClick={addNoteModal}>
                     <i className="fa fa-plus"></i>
                 </button>
+
+                {showNoteModel && <NoteModel showModal={showModal} openModal={addNoteModal} setShowModal={setShowModal} modalType={modalType} note={showNote} />}
             </div>
         </>
     );

@@ -1,0 +1,57 @@
+/* Increase modal width and height */
+.custom-modal-dialog {
+    max-width: 90%;
+    /* Adjust the width as per your requirement */
+    width: 700px;
+    /* You can customize this value */
+    max-height: 80vh;
+    /* Ensure the height is not too large */
+    overflow-y: auto;
+}
+
+/* Sliding effect */
+.modal.fade .modal-dialog {
+    transform: translateY(-50px);
+    /* Initial position (above the screen) */
+    opacity: 0;
+    /* Start with modal being invisible */
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.modal.fade.show .modal-dialog {
+    transform: translateY(0);
+    /* Final position after sliding in */
+    opacity: 1;
+    /* Make the modal visible */
+}
+
+/* Backdrop styles */
+.modal-backdrop.fade.show {
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Darkened background */
+    z-index: 1040;
+    /* Ensure backdrop appears behind modal */
+}
+
+/* Header Styling */
+.modal-header {
+    background-color: #007bff;
+    /* Branding color */
+    color: white;
+}
+
+/* Footer Styling */
+.modal-footer {
+    background-color: #f8f9fa;
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: #28a745;
+    /* Green button for primary action */
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    /* Gray button for close action */
+}
