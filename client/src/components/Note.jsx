@@ -5,14 +5,12 @@ import "../componentCSS/Note.css";
 import NoteModel from "./noteModel"
 
 const Note = () => {
-    const { notes } = useContext(NoteContext);
+    const { notes, setModalType } = useContext(NoteContext);
     const [isNote] = useState(true);
     const [isLoading] = useState(false);
     const [showNoteModel] = useState(true);
     const [showModal, setShowModal] = useState(false);
-    const [modalType, setModalType] = useState("");
     const [showNote, setShowNote] = useState(null);
-
 
     const addNoteModal = () => {
         setShowModal(true);
@@ -40,10 +38,7 @@ const Note = () => {
                     {notes && notes.length > 0 ? (
                         notes.map((note) => (
                             <div key={note._id} onClick={() => handleNoteClick(note)}>
-                                <NoteItem
-                                    note={note}
-                                    loading={isLoading}
-                                />
+                                <NoteItem note={note} loading={isLoading} setShowModal={setShowModal} />
                             </div>
                         ))
                     ) : (
@@ -51,12 +46,12 @@ const Note = () => {
                     )}
                 </div>
 
-                {/* Add Note Button */}
+
                 <button className="add-note-btn" onClick={addNoteModal}>
                     <i className="fa fa-plus"></i>
                 </button>
 
-                {showNoteModel && <NoteModel showModal={showModal} openModal={addNoteModal} setShowModal={setShowModal} modalType={modalType} note={showNote} />}
+                {showNoteModel && <NoteModel showModal={showModal} setShowModal={setShowModal} note={showNote} />}
             </div>
         </>
     );

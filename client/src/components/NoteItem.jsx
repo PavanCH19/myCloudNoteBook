@@ -1,8 +1,11 @@
 import PropTypes from "prop-types";
+import { useContext } from "react";
+import context from "../contaxtApi/context";
 import "../componentCSS/NoteItem.css";
 
 const NoteItem = (props) => {
-    const { note, loading, handleNoteUpdate, handleNoteDelete } = props;
+    const { setEditNote, handleNoteDelete, setModalType } = useContext(context);
+    const { note, loading, setShowModal } = props;
 
     if (loading) {
         return <div className="noteItemContainer">Loading...</div>;
@@ -12,8 +15,16 @@ const NoteItem = (props) => {
         <div className="noteItemContainer">
             <div className="note-header">
                 <h4>{note.title}</h4>
-                <i className="fa-regular fa-pen-to-square" onClick={() => handleNoteUpdate(note)}></i>
-                <i className="fa-solid fa-trash-can" onClick={() => handleNoteDelete(note._id)}></i>
+                <i className="fa-regular fa-pen-to-square" onClick={(e) => {
+                    e.stopPropagation();
+                    setEditNote(note);
+                    setModalType("editNote")
+                    setShowModal(true);
+                }}></i>
+                <i className="fa-solid fa-trash-can" onClick={(e) => {
+                    e.stopPropagation();
+                    handleNoteDelete(note);
+                }}></i>
             </div>
 
             <p>{note.description}</p>
@@ -36,6 +47,7 @@ NoteItem.propTypes = {
     loading: PropTypes.bool.isRequired,
     handleNoteUpdate: PropTypes.func.isRequired,
     handleNoteDelete: PropTypes.func.isRequired,
+    setShowModal: PropTypes.func
 };
 
 export default NoteItem;

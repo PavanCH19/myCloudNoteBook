@@ -123,8 +123,24 @@ const NoteContextProvider = ({ children }) => {
         }
     ]);
 
+    const [editNote, setEditNote] = useState(null);
+    const [modalType, setModalType] = useState("");
+
+    console.log(modalType)
+    console.log(editNote)
+
+    const handleNoteUpdate = (note) => {
+        console.log(note);
+    }
+
+    const handleNoteDelete = (note) => {
+        console.log(note);
+    }
+
+
+
     return (
-        <NoteContext.Provider value={{ notes, setNote }}>
+        <NoteContext.Provider value={{ notes, setNote, editNote, setEditNote, handleNoteDelete, handleNoteUpdate, modalType, setModalType }}>
             {children}
         </NoteContext.Provider>
     );

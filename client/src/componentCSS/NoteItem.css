@@ -115,14 +115,19 @@
     font-size: 1.6rem;
     color: #6a1b9a;
     cursor: pointer;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease;
     margin-left: 12px;
 }
 
 /* Hover effect for icons */
 .note-header i:hover {
     color: #5a1372;
+    transform: scale(1.2);
+    /* Slight pop-up effect */
 }
+
+
+
 
 /* Responsive adjustments */
 

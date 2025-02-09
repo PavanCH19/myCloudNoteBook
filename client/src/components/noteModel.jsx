@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import PropTypes from "prop-types";
+import AddEditNote from "./addEditNote";
+import context from "../contaxtApi/context";
 
-const MyCloudNoteBookModal = ({ showModal, openModal, setShowModal, modalType, note }) => {
+const MyCloudNoteBookModal = (props) => {
+    const { modalType } = useContext(context);
+    const { showModal, setShowModal, note } = props;
     const [isClosing, setIsClosing] = useState(false);
 
-    useEffect(() => {
-        if (note && modalType) {
-            console.log(modalType);
-            console.log(note);
-        }
-    }, [note, modalType]);
+
+
+    console.log("sdfsdfsdfsdfdsf" + modalType);
+    console.log(note);
 
     const closeModal = () => {
         setIsClosing(true);
@@ -18,10 +20,6 @@ const MyCloudNoteBookModal = ({ showModal, openModal, setShowModal, modalType, n
 
     return (
         <div className="container mt-4">
-            <button className="btn btn-primary" onClick={openModal}>
-                Open MyCloudNoteBook Modal
-            </button>
-
             {showModal && (
                 <div
                     className={`modal fade show d-block ${isClosing ? 'modal-closing' : ''}`}
@@ -31,48 +29,99 @@ const MyCloudNoteBookModal = ({ showModal, openModal, setShowModal, modalType, n
                     <div className="modal-dialog modal-dialog-centered" style={{ width: "80%", maxWidth: "1000px", height: "90vh", maxHeight: "95vh", overflowY: "auto" }}>
                         <div className="modal-content">
                             <div className="modal-header bg-primary text-white">
-                                <h5 className="modal-title">MyCloudNoteBook : &quot;{note.title}&quot;</h5>
+                                <h5 className="modal-title">MyCloudNoteBook : &quot;{note?.title || 'Untitled Note'}&quot;</h5>
                                 <button type="button" className="btn-close" onClick={closeModal}></button>
                             </div>
                             <div className="modal-body">
-                                {(modalType === "addNote") ? (
-                                    <></>
+                                {((modalType === "addNote") || (modalType === "editNote")) ? (
+                                    <AddEditNote />
                                 ) : (
                                     <>
                                         <p className="note-description">{note?.description || 'No description available'}</p>
-                                        <p className="note-tag">{note?.tag || 'No tag'}</p>
-                                        <p className="note-date">{note?.date || 'No date'}</p>
+                                        <div className="tag-date">
+                                            <span className="note-tag">{note?.tag || 'No tag'}</span>
+                                            <span className="note-date">{note?.date || 'No date'}</span>
+                                        </div>
                                     </>
                                 )}
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" onClick={closeModal}>
-                                    Close
-                                </button>
-                                <button type="button" className="btn btn-primary">
-                                    Get Started
-                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             )}
 
-            {/* Modal backdrop (to darken background) */}
+            {/* Modal backdrop */}
             {showModal && <div className="modal-backdrop fade show" onClick={closeModal}></div>}
 
-            {/* Internal CSS for modal without sliding effect */}
             <style>{`
+                /* Styles for the form and modal */
+                .form-group {
+                    margin-bottom: 20px;
+                }
+
+                .form-group label {
+                    font-size: 1rem;
+                    font-weight: 600;
+                    color: #333;
+                    margin-bottom: 8px;
+                    display: inline-block;
+                }
+
+                .form-control {
+                    width: 100%;
+                    padding: 12px;
+                    font-size: 1rem;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    box-sizing: border-box;
+                    background-color: #fff;
+                    transition: all 0.3s ease;
+                }
+
+                .form-control:focus {
+                    border-color: #007bff;
+                    outline: none;
+                    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+                }
+
+                .form-control::placeholder {
+                    color: #aaa;
+                }
+
+                textarea.form-control {
+                    resize: vertical;
+                    min-height: 100px;
+                }
+
+                button[type="submit"] {
+                    padding: 10px 20px;
+                    font-size: 1rem;
+                    color: #fff;
+                    background-color: #007bff;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                }
+
+                button[type="submit"]:hover {
+                    background-color: #0056b3;
+                }
+
+                button[type="submit"]:disabled {
+                    background-color: #ccc;
+                    cursor: not-allowed;
+                }
+
                 .modal-dialog {
-                    opacity: 1; /* No sliding, just appear */
+                    opacity: 1;
                 }
 
                 .modal-backdrop.fade.show {
-                    background-color: rgba(0, 0, 0, 0.7); /* Darkened background */
+                    background-color: rgba(0, 0, 0, 0.7);
                     z-index: 1040;
                 }
 
-                /* Make header sticky */
                 .modal-header {
                     position: sticky;
                     top: 0;
@@ -86,16 +135,8 @@ const MyCloudNoteBookModal = ({ showModal, openModal, setShowModal, modalType, n
                 .modal-body {
                     word-wrap: break-word;
                     overflow-y: auto;
-                    max-height: 70vh; /* Limit height to allow for scrolling */
+                    max-height: 70vh;
                     padding: 20px;
-                }
-
-                /* Styling for p tags */
-                .note-tag {
-                    font-size: 1.1rem;
-                    font-weight: 600;
-                    color: #007bff;
-                    margin-bottom: 12px;
                 }
 
                 .note-description {
@@ -114,9 +155,10 @@ const MyCloudNoteBookModal = ({ showModal, openModal, setShowModal, modalType, n
                     text-align: right;
                 }
 
-                /* Make footer buttons consistent */
-                .modal-footer button {
-                    font-weight: 600;
+                .tag-date {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
                 }
             `}</style>
         </div>
@@ -125,7 +167,6 @@ const MyCloudNoteBookModal = ({ showModal, openModal, setShowModal, modalType, n
 
 MyCloudNoteBookModal.propTypes = {
     showModal: PropTypes.bool.isRequired,
-    openModal: PropTypes.func.isRequired,
     setShowModal: PropTypes.func.isRequired,
     modalType: PropTypes.string,
     note: PropTypes.object
