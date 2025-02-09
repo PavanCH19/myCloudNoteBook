@@ -1,9 +1,9 @@
 import { useState, useContext, useEffect } from "react";
+import PropTypes from 'prop-types';
 import context from "../contaxtApi/context";
 
-function AddEditNote() {
+function AddEditNote({ closeModal }) {
     const { editNote, modalType, handleNoteUpdate, handleAddNote } = useContext(context);
-
 
     const [noteData, setNoteData] = useState({
         title: "",
@@ -43,6 +43,7 @@ function AddEditNote() {
         }
 
         setNoteData({ title: "", description: "", tag: "" });
+        closeModal();
     };
 
     return (
@@ -72,5 +73,9 @@ function AddEditNote() {
         </form>
     );
 }
+
+AddEditNote.propTypes = {
+    closeModal: PropTypes.func.isRequired
+};
 
 export default AddEditNote;

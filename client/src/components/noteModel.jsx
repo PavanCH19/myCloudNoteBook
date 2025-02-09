@@ -34,13 +34,13 @@ const MyCloudNoteBookModal = (props) => {
                             </div>
                             <div className="modal-body">
                                 {((modalType === "addNote") || (modalType === "editNote")) ? (
-                                    <AddEditNote />
+                                    <AddEditNote closeModal={closeModal} />
                                 ) : (
                                     <>
                                         <p className="note-description">{note?.description || 'No description available'}</p>
                                         <div className="tag-date">
                                             <span className="note-tag">{note?.tag || 'No tag'}</span>
-                                            <span className="note-date">{note?.date || 'No date'}</span>
+                                            <span className="note-date">{new Date(note?.date).toLocaleDateString() || 'No date'}</span>
                                         </div>
                                     </>
                                 )}
