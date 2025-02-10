@@ -9,7 +9,7 @@ const NoteContextProvider = ({ children }) => {
     // Set default base URL
     axios.defaults.baseURL = 'http://localhost:3000/api';
     axios.defaults.headers.common['Content-Type'] = 'application/json';
-    axios.defaults.headers.common['auth-token'] = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTZkZWIzY2RmNTYyODE2NmM3NDA1OSIsImlhdCI6MTczOTE2NTMwNiwiZXhwIjoxNzM5MTY4OTA2fQ.gHzv4dBKrmU94NkKdw95Bbxoar1--USDsXJWgSBLKMM';
+    axios.defaults.headers.common['auth-token'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTZkZWIzY2RmNTYyODE2NmM3NDA1OSIsImlhdCI6MTczOTE2ODk4MiwiZXhwIjoxNzM5MTcyNTgyfQ.c0Je3W6D4YLCLIFvKh5jjUaHA11r8-8SVVBR5XhD10s";
 
     const fetchNotes = async () => {
         try {
@@ -24,21 +24,26 @@ const NoteContextProvider = ({ children }) => {
         fetchNotes();
     }, []);
 
-
     const [editNote, setEditNote] = useState(null);
     const [modalType, setModalType] = useState("");
+    const [alertType, setAlertType] = useState(null);
+    const [alertMsg, setAlertMsg] = useState(null);
 
     const handleNoteUpdate = async (Id, note) => {
-
         try {
             const addNote = await axios.put(`/notes/updateNote/${Id}`, note);
-            alert(addNote.data.msg);
+            setAlertMsg(addNote.data.msg);
+            setAlertType('success');
         } catch (error) {
             if (error.response.data.errors) {
-                const errorMessage = error.response.data.errors.map(error => `${error.msg} (Field: ${error.path})`).join('\n');
-                alert(errorMessage);
+                const errorMessage = error.response.data.errors
+                    .map(error => `<strong>${error.msg}</strong> <span>(Field: ${error.path})</span>`)
+                    .join('<br/>');
+                setAlertMsg(errorMessage);
+                setAlertType('warning');
             } else {
-                alert("An error occurred while adding the note.");
+                setAlertMsg("An error occurred while adding the note.");
+                setAlertType('danger');
             }
             console.log(error);
         }
@@ -46,37 +51,41 @@ const NoteContextProvider = ({ children }) => {
     };
 
     const handleNoteDelete = async (note) => {
-
         try {
-            const deleteRes = await axios.delete(`/notes/deleteNote/${note._id}`)
-            alert(`${deleteRes} note Id is ${note._id} `)
+            await axios.delete(`/notes/deleteNote/${note._id}`)
+            setAlertMsg(`Note with ID ${note._id} has been deleted.`);
+            setAlertType('success');
         } catch (error) {
+            setAlertMsg("An error occurred while deleting the note.");
+            setAlertType('danger');
             console.log(error);
         }
         fetchNotes();
     };
 
     const handleAddNote = async (note) => {
-
         try {
             const addNote = await axios.post('/notes/createNote', note);
-            alert(addNote.data.msg);
+            setAlertMsg(addNote.data.msg);
+            setAlertType('success');
         } catch (error) {
             if (error.response.data.errors) {
-                const errorMessage = error.response.data.errors.map(error => `${error.msg} (Field: ${error.path})`).join('\n');
-                alert(errorMessage);
+                const errorMessage = error.response.data.errors
+                    .map(error => `<strong>${error.msg}</strong> <span>(Field: ${error.path})</span>`)
+                    .join('<br/>');
+                setAlertMsg(errorMessage);
+                setAlertType('warning');
             } else {
-                alert("An error occurred while adding the note.");
+                setAlertMsg("An error occurred while adding the note.");
+                setAlertType('danger');
             }
             console.log(error);
         }
         fetchNotes();
     };
 
-
-
     return (
-        <NoteContext.Provider value={{ notes, setNote, editNote, setEditNote, handleNoteDelete, handleNoteUpdate, modalType, setModalType, handleAddNote }}>
+        <NoteContext.Provider value={{ notes, setNote, editNote, setEditNote, handleNoteDelete, handleNoteUpdate, modalType, setModalType, handleAddNote, alertMsg, alertType }}>
             {children}
         </NoteContext.Provider>
     );

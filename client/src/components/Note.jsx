@@ -3,6 +3,7 @@ import NoteContext from "../contaxtApi/context";
 import NoteItem from "./NoteItem";
 import "../componentCSS/Note.css";
 import NoteModel from "./noteModel"
+import AlertBox from "./alert";
 
 const Note = () => {
     const { notes, setModalType } = useContext(NoteContext);
@@ -28,12 +29,8 @@ const Note = () => {
 
     return (
         <>
-            {isNote && (
-                <div className="alert-box" role="alert">
-                    <i className="fa-duotone fa-solid fa-wifi-weak"></i> Check your internet connection
-                </div>
-            )}
-            <div className="notes-container">
+            {isNote && (<AlertBox />)}
+            <div className="notes-container mx-3 mt-2 p-2">
                 <div className="notes-content">
                     {notes && notes.length > 0 ? (
                         notes.map((note) => (
