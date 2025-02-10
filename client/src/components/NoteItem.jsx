@@ -30,7 +30,16 @@ const NoteItem = (props) => {
             <p>{note.description}</p>
             <span className="note-tag">{note.tag}</span>
             <small className="note-date">
-                {new Date(note.date).toLocaleDateString()}
+                {new Date(note.date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                })} {new Date(note.date).toLocaleTimeString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true,
+                })}
+
             </small>
         </div>
     );

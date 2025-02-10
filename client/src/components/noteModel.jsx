@@ -10,8 +10,7 @@ const MyCloudNoteBookModal = (props) => {
 
 
 
-    console.log("sdfsdfsdfsdfdsf" + modalType);
-    console.log(note);
+
 
     const closeModal = () => {
         setIsClosing(true);
@@ -40,7 +39,16 @@ const MyCloudNoteBookModal = (props) => {
                                         <p className="note-description">{note?.description || 'No description available'}</p>
                                         <div className="tag-date">
                                             <span className="note-tag">{note?.tag || 'No tag'}</span>
-                                            <span className="note-date">{new Date(note?.date).toLocaleDateString() || 'No date'}</span>
+                                            <span className="note-date">{note ?
+                                                `${new Date(note.date).toLocaleDateString('en-US', {
+                                                    year: 'numeric',
+                                                    month: 'short',
+                                                    day: 'numeric',
+                                                })} ${new Date(note.date).toLocaleTimeString('en-US', {
+                                                    hour: '2-digit',
+                                                    minute: '2-digit',
+                                                    hour12: true,
+                                                })}` : 'No date'}</span>
                                         </div>
                                     </>
                                 )}

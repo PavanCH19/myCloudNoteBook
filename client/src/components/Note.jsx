@@ -38,7 +38,7 @@ const Note = () => {
                     {notes && notes.length > 0 ? (
                         notes.map((note) => (
                             <div key={note._id} onClick={() => handleNoteClick(note)}>
-                                <NoteItem note={note} loading={isLoading} setShowModal={setShowModal} />
+                                <NoteItem key={note._id} note={note} loading={isLoading} setShowModal={setShowModal} />
                             </div>
                         ))
                     ) : (
