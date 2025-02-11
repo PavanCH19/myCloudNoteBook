@@ -9,7 +9,7 @@ const NoteContextProvider = ({ children }) => {
     // Set default base URL
     axios.defaults.baseURL = 'http://localhost:3000/api';
     axios.defaults.headers.common['Content-Type'] = 'application/json';
-    axios.defaults.headers.common['auth-token'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTZkZWIzY2RmNTYyODE2NmM3NDA1OSIsImlhdCI6MTczOTE4NDc1MCwiZXhwIjoxNzM5MTg4MzUwfQ.cD-TXqCl_2Sylvf8SYDWv1rnB555Jmqwiy_H69uRbiM";
+    axios.defaults.headers.common['auth-token'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTZkZWIzY2RmNTYyODE2NmM3NDA1OSIsImlhdCI6MTczOTI1Mjk4MywiZXhwIjoxNzM5MjU2NTgzfQ.38CMPPPziMp3zGjBh2ZZxdn1rJ3v5AFD9eJsNtAZW1o";
     const fetchNotes = async () => {
         try {
             const response = await axios.get("/notes/fetchNotes");

@@ -14,7 +14,7 @@ function Login() {
 
     return (
         <div className="body">
-            <div className={`container ${isActive ? 'active' : ''}`} id="container">
+            <div className={`containers ${isActive ? 'active' : ''}`} id="container">
                 <div className="form-container sign-up">
                     <form>
                         <h1>Create Account</h1>
