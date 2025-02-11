@@ -1,8 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "../componentCSS/login.css";
 
+import context from "../contaxtApi/context";
+import { useNavigate } from "react-router-dom";
+
 function Login() {
+    const { handleLogin } = useContext(context);
     const [isActive, setIsActive] = useState(false);
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        password: "",
+    });
+
+    const navigate = useNavigate();
+
 
     const handleRegisterClick = () => {
         setIsActive(true);
@@ -12,11 +24,32 @@ function Login() {
         setIsActive(false);
     };
 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    const handleRegistrationSubmit = (e) => {
+        e.preventDefault();
+        console.log(formData);
+    };
+
+    const handleLoginSubmit = async (e) => {
+        e.preventDefault();
+        if (handleLogin(formData)) {
+            navigate("/");
+        }
+    };
+
     return (
         <div className="body">
             <div className={`containers ${isActive ? 'active' : ''}`} id="container">
+                {/* Sign-up form */}
                 <div className="form-container sign-up">
-                    <form>
+                    <form onSubmit={handleRegistrationSubmit}>
                         <h1>Create Account</h1>
                         <div className="social-icons">
                             <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
@@ -25,14 +58,34 @@ function Login() {
                             <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
                         </div>
                         <span>or use your email for registration</span>
-                        <input type="text" placeholder="Name" />
-                        <input type="email" placeholder="Email" />
-                        <input type="password" placeholder="Password" />
-                        <button>Sign Up</button>
+                        <input
+                            type="text"
+                            placeholder="Name"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleInputChange}
+                        />
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleInputChange}
+                        />
+                        <button type="submit">Sign Up</button>
                     </form>
                 </div>
+
+                {/* Sign-in form */}
                 <div className="form-container sign-in">
-                    <form>
+                    <form onSubmit={handleLoginSubmit}>
                         <h1>Sign In</h1>
                         <div className="social-icons">
                             <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
@@ -41,12 +94,28 @@ function Login() {
                             <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
                         </div>
                         <span>or use your email password</span>
-                        <input type="email" placeholder="Email" />
-                        <input type="password" placeholder="Password" />
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            required
+                        />
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleInputChange}
+                            required
+                        />
                         <a href="#">Forgot your password?</a>
-                        <button>Sign In</button>
+                        <button type="submit">Sign In</button>
                     </form>
                 </div>
+
+                {/* Toggle container */}
                 <div className="toggle-container">
                     <div className="toggle">
                         <div className="toggle-panel toggle-left">

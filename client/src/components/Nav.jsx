@@ -47,6 +47,11 @@ const Nav = () => {
                                 About
                             </Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className={getNavLinkClass("/Login")} to="/Login">
+                                Login
+                            </Link>
+                        </li>
                     </ul>
 
                     {/* Right-aligned Section for Search Bar & User Profile */}

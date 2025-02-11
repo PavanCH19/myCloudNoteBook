@@ -3,13 +3,16 @@ import axios from "axios";
 import NoteContext from "./context";
 import PropTypes from "prop-types";
 
+
 const NoteContextProvider = ({ children }) => {
     const [notes, setNote] = useState(null);
+
 
     // Set default base URL
     axios.defaults.baseURL = 'http://localhost:3000/api';
     axios.defaults.headers.common['Content-Type'] = 'application/json';
-    axios.defaults.headers.common['auth-token'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTZkZWIzY2RmNTYyODE2NmM3NDA1OSIsImlhdCI6MTczOTI1Mjk4MywiZXhwIjoxNzM5MjU2NTgzfQ.38CMPPPziMp3zGjBh2ZZxdn1rJ3v5AFD9eJsNtAZW1o";
+    axios.defaults.headers.common['auth-token'] = localStorage.getItem("auth-token");
+
     const fetchNotes = async () => {
         try {
             const response = await axios.get("/notes/fetchNotes");
@@ -19,9 +22,14 @@ const NoteContextProvider = ({ children }) => {
         }
     };
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+
     useEffect(() => {
-        fetchNotes();
-    }, []);
+        if (isLoggedIn || localStorage.getItem("auth-token")) {
+            fetchNotes();
+        }
+    }, [isLoggedIn]);
 
     const [editNote, setEditNote] = useState(null);
     const [modalType, setModalType] = useState("");
@@ -30,8 +38,8 @@ const NoteContextProvider = ({ children }) => {
 
     const handleNoteUpdate = async (Id, note) => {
         try {
-            const addNote = await axios.put(`/notes/updateNote/${Id}`, note);
-            setAlertMsg(addNote.data.msg);
+            const updateNote = await axios.put(`/notes/updateNote/${Id}`, note);
+            setAlertMsg(updateNote.data.msg);
             setAlertType('success');
         } catch (error) {
             if (error.response.data.errors) {
@@ -41,23 +49,23 @@ const NoteContextProvider = ({ children }) => {
                 setAlertMsg(errorMessage);
                 setAlertType('warning');
             } else {
-                setAlertMsg("An error occurred while adding the note.");
+                setAlertMsg("An error occurred while updating the note.");
                 setAlertType('danger');
             }
-            console.log(error);
+            console.error(error);
         }
         fetchNotes();
     };
 
     const handleNoteDelete = async (note) => {
         try {
-            await axios.delete(`/notes/deleteNote/${note._id}`)
+            await axios.delete(`/notes/deleteNote/${note._id}`);
             setAlertMsg(`Note with ID ${note._id} has been deleted.`);
             setAlertType('success');
         } catch (error) {
             setAlertMsg("An error occurred while deleting the note.");
             setAlertType('danger');
-            console.log(error);
+            console.error(error);
         }
         fetchNotes();
     };
@@ -78,13 +86,29 @@ const NoteContextProvider = ({ children }) => {
                 setAlertMsg("An error occurred while adding the note.");
                 setAlertType('danger');
             }
-            console.log(error);
+            console.error(error);
         }
         fetchNotes();
     };
 
+    const handleLogin = async (formData) => {
+        try {
+            const response = await axios.post("http://localhost:3000/api/auth/login", { email: formData.email, password: formData.password });
+            setIsLoggedIn(false)
+            localStorage.setItem("auth-token", response.data.token);
+            console.log(localStorage.getItem("auth-token"));
+            setIsLoggedIn(true);
+            return true;
+        } catch (error) {
+            console.error("Error during login:", error.response?.data || error.message);
+        }
+    };
+
     return (
-        <NoteContext.Provider value={{ notes, setNote, editNote, setEditNote, handleNoteDelete, handleNoteUpdate, modalType, setModalType, handleAddNote, alertMsg, alertType }}>
+        <NoteContext.Provider value={{
+            notes, setNote, editNote, setEditNote, handleNoteDelete, handleNoteUpdate, modalType,
+            setModalType, handleAddNote, alertMsg, alertType, handleLogin
+        }}>
             {children}
         </NoteContext.Provider>
     );
