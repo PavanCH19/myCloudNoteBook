@@ -1,0 +1,173 @@
+.about-container {
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 50px;
+    max-width: 90%;
+    margin: auto;
+}
+
+/* Headings */
+h1 {
+    font-size: 40px;
+    color: #007bff;
+    font-weight: bold;
+    text-align: center;
+}
+
+h2 {
+    font-size: 30px;
+    color: #007bff;
+    font-weight: 600;
+    text-align: center;
+}
+
+p {
+    font-size: 18px;
+    color: #555;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 32px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+}
+
+/* Text Styles */
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: #6c757d;
+}
+
+.text-success {
+    color: #28a745;
+}
+
+.text-info {
+    color: #17a2b8;
+}
+
+.text-warning {
+    color: #f39c12;
+}
+
+.text-danger {
+    color: #e74c3c;
+}
+
+/* Lists */
+ul {
+    padding-left: 20px;
+}
+
+.feature-item,
+.tech-item,
+.roadmap-item {
+    font-size: 16px;
+    color: #555;
+    border-left: 4px solid #007bff;
+    padding-left: 12px;
+    margin-bottom: 10px;
+    transition: background 0.3s ease-in-out;
+}
+
+.feature-item:hover,
+.tech-item:hover,
+.roadmap-item:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+/* Responsive List Items */
+@media (max-width: 768px) {
+
+    .feature-item,
+    .tech-item,
+    .roadmap-item {
+        font-size: 14px;
+        padding-left: 8px;
+    }
+}
+
+/* Testimonials */
+.testimonial {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.testimonial em {
+    font-size: 18px;
+    font-style: italic;
+    color: #555;
+}
+
+.testimonial strong {
+    display: block;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* Responsive Testimonials */
+@media (max-width: 768px) {
+    .testimonial {
+        padding: 15px;
+    }
+
+    .testimonial em {
+        font-size: 16px;
+    }
+
+    .testimonial strong {
+        font-size: 14px;
+    }
+}
+
+/* Contact Link */
+.contact-link {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.contact-link:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+/* RESPONSIVE LAYOUT */
+@media (max-width: 576px) {
+    .about-container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+}

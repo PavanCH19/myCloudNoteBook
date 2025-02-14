@@ -3,13 +3,15 @@ import axios from "axios";
 import NoteContext from "./context";
 import PropTypes from "prop-types";
 
+
 const NoteContextProvider = ({ children }) => {
     const [notes, setNote] = useState(null);
 
-    // Set default base URL
-    axios.defaults.baseURL = 'http://localhost:3000/api';
+    // Set default base URL and headers from environment variables
+    axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
     axios.defaults.headers.common['Content-Type'] = 'application/json';
-    axios.defaults.headers.common['auth-token'] = localStorage.getItem("auth-token");
+    axios.defaults.headers.common['auth-token'] = localStorage.getItem("auth-token") || import.meta.env.VITE_AUTH_TOKEN;
+
 
     const fetchNotes = async () => {
         try {

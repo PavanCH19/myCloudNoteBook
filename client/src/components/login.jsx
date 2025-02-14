@@ -1,8 +1,7 @@
 import { useContext, useState } from "react";
 import "../componentCSS/login.css";
-
 import context from "../contaxtApi/context";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
     const { handleLogin, handleCreateUser } = useContext(context);
@@ -14,7 +13,6 @@ function Login() {
     });
 
     const navigate = useNavigate();
-
 
     const handleRegisterClick = () => {
         setIsActive(true);
@@ -65,6 +63,7 @@ function Login() {
                             name="name"
                             value={formData.name}
                             onChange={handleInputChange}
+                            autoComplete="name"
                         />
                         <input
                             type="email"
@@ -72,6 +71,7 @@ function Login() {
                             name="email"
                             value={formData.email}
                             onChange={handleInputChange}
+                            autoComplete="email"
                         />
                         <input
                             type="password"
@@ -79,6 +79,7 @@ function Login() {
                             name="password"
                             value={formData.password}
                             onChange={handleInputChange}
+                            autoComplete="new-password"
                         />
                         <button type="submit">Sign Up</button>
                     </form>
@@ -102,6 +103,7 @@ function Login() {
                             value={formData.email}
                             onChange={handleInputChange}
                             required
+                            autoComplete="email"
                         />
                         <input
                             type="password"
@@ -110,8 +112,9 @@ function Login() {
                             value={formData.password}
                             onChange={handleInputChange}
                             required
+                            autoComplete="current-password"
                         />
-                        <a href="#">Forgot your password?</a>
+                        <Link to="/password-reset">Forgot your password?</Link>
                         <button type="submit">Sign In</button>
                     </form>
                 </div>

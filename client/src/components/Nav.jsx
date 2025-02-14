@@ -7,7 +7,7 @@ const Nav = () => {
 
     const user = {
         username: "JohnDoesssssssssssssssssssssssssssssssssssssss",
-        profileImage: "https://via.placeholder.com/40"
+        profileImage: "../../public/vite.svg"
     };
 
     const getNavLinkClass = (path) => {

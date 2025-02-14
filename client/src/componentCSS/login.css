@@ -37,6 +37,10 @@
     /* Lighter gray color for the text */
 }
 
+.toggle h1 {
+    color: #f1f2f3;
+}
+
 
 .containers span {
     font-size: 12px;
