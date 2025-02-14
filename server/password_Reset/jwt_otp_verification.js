@@ -28,12 +28,14 @@ router.post('/password-reset-request', async (req, res) => {
     // Send email with OTP and reset link
     const resetLink = `http://yourapp.com/reset-password?token=${resetToken}`;
     const htmlContent = `
-        <p>Hi,</p>
-        <p>Click the link below to reset your password:</p>
-        <p><a href="${resetLink}">Reset Password</a></p>
-        <p>Alternatively, use this OTP: <strong>${otp}</strong></p>
-        <p>This OTP is valid for 10 minutes.</p>
-    `;
+    <p>Hi,</p>
+    <p>Welcome to MyCloudNoteBook, the most secure and flexible way to store your notes and files in the cloud. To ensure the safety of your account, please reset your password.</p>
+    <p>Click the link below to reset your password:</p>
+    <p><a href="${resetLink}" style="color: #1a73e8; text-decoration: none;">Reset Password</a></p>
+    <p>Alternatively, use this OTP: <strong>${otp}</strong></p>
+    <p>This OTP is valid for 10 minutes.</p>
+`;
+
 
     try {
         await sendEmail(email, 'Password Reset Request', 'Password Reset Instructions', htmlContent);
