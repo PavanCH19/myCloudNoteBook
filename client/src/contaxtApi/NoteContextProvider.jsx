@@ -3,7 +3,6 @@ import axios from "axios";
 import NoteContext from "./context";
 import PropTypes from "prop-types";
 
-
 const NoteContextProvider = ({ children }) => {
     const [notes, setNote] = useState(null);
 
@@ -11,7 +10,6 @@ const NoteContextProvider = ({ children }) => {
     axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
     axios.defaults.headers.common['Content-Type'] = 'application/json';
     axios.defaults.headers.common['auth-token'] = localStorage.getItem("auth-token") || import.meta.env.VITE_AUTH_TOKEN;
-
 
     const fetchNotes = async () => {
         try {
@@ -32,8 +30,8 @@ const NoteContextProvider = ({ children }) => {
 
     const [editNote, setEditNote] = useState(null);
     const [modalType, setModalType] = useState("");
-    const [alertType, setAlertType] = useState(null);
-    const [alertMsg, setAlertMsg] = useState(null);
+    const [alertType, setAlertType] = useState(null); // Restore from localStorage
+    const [alertMsg, setAlertMsg] = useState(null); // Restore from localStorage
 
     const handleNoteUpdate = async (Id, note) => {
         try {
@@ -116,6 +114,16 @@ const NoteContextProvider = ({ children }) => {
             console.error("Error during login:", error.response?.data || error.message);
         }
     };
+
+    useEffect(() => {
+        if (alertMsg && alertType) {
+            const timer = setTimeout(() => {
+                setAlertMsg(null);
+                setAlertType(null);
+            }, 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [alertMsg, alertType]);
 
     return (
         <NoteContext.Provider value={{

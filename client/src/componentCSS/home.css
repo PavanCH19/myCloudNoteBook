@@ -1,0 +1,200 @@
+/* General Styles */
+.home-container {
+    width: 98%;
+    margin: 50px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Titles & Text */
+.title {
+    text-align: center;
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.description {
+    text-align: center;
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Search Box */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    width: 50%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: 0.3s ease-in-out;
+}
+
+.search-box:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+}
+
+.search-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s ease;
+}
+
+.search-btn:hover {
+    background: #0056b3;
+}
+
+/* Notes Section */
+.section-title {
+    text-align: center;
+    font-size: 24px;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.section-description {
+    text-align: center;
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+/* Login Button */
+.login-container {
+    text-align: center;
+}
+
+.login-btn {
+    background: #28a745;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: 0.3s ease;
+}
+
+.login-btn:hover {
+    background: #218838;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .title {
+        font-size: 24px;
+    }
+
+    .description {
+        font-size: 14px;
+    }
+
+    .search-box {
+        width: 60%;
+        /* Adjust width on medium screens */
+    }
+
+    .search-btn {
+        font-size: 14px;
+        padding: 8px 12px;
+        /* Adjust button padding */
+    }
+
+    .section-title {
+        font-size: 22px;
+    }
+
+    .section-description {
+        font-size: 12px;
+    }
+
+    .login-btn {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Adjust layout for smaller screens */
+    .search-container {
+        flex-direction: column;
+        gap: 15px;
+        /* Add gap between elements in column layout */
+    }
+
+    .search-box {
+        width: 80%;
+        /* Increase width for smaller screens */
+    }
+
+    .search-btn {
+        width: 80%;
+        /* Make the button full-width on smaller screens */
+    }
+
+    .section-title {
+        font-size: 20px;
+    }
+
+    .section-description {
+        font-size: 12px;
+    }
+
+    .login-btn {
+        width: 80%;
+        /* Full width on small screens */
+    }
+}
+
+@media (max-width: 480px) {
+
+    /* Adjust for very small screens (e.g., mobile phones) */
+    .title {
+        font-size: 20px;
+    }
+
+    .description {
+        font-size: 12px;
+    }
+
+    .search-box {
+        width: 90%;
+    }
+
+    .search-btn {
+        width: 90%;
+        font-size: 12px;
+    }
+
+    .section-title {
+        font-size: 18px;
+    }
+
+    .section-description {
+        font-size: 12px;
+    }
+
+    .login-btn {
+        width: 90%;
+        font-size: 12px;
+        padding: 8px 10px;
+    }
+}

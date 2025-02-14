@@ -2,14 +2,12 @@ import { useContext, useState } from "react";
 import NoteContext from "../contaxtApi/context";
 import NoteItem from "./NoteItem";
 import "../componentCSS/Note.css";
-import NoteModel from "./noteModel"
+import NoteModel from "./noteModel";
 import AlertBox from "./alert";
 
 const Note = () => {
     const { notes, setModalType } = useContext(NoteContext);
-    const [isNote] = useState(true);
     const [isLoading] = useState(false);
-    const [showNoteModel] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [showNote, setShowNote] = useState(null);
 
@@ -17,7 +15,6 @@ const Note = () => {
         setShowModal(true);
         setModalType("addNote");
     };
-
 
     const handleNoteClick = (note) => {
         setShowModal(true);
@@ -29,7 +26,7 @@ const Note = () => {
 
     return (
         <>
-            {isNote && (<AlertBox />)}
+            <AlertBox />
             <div className="notes-container mx-3 mt-2 p-2">
                 <div className="notes-content">
                     {notes && notes.length > 0 ? (
@@ -43,12 +40,11 @@ const Note = () => {
                     )}
                 </div>
 
-
                 <button className="add-note-btn" onClick={addNoteModal}>
                     <i className="fa fa-plus"></i>
                 </button>
 
-                {showNoteModel && <NoteModel showModal={showModal} setShowModal={setShowModal} note={showNote} />}
+                {showModal && <NoteModel showModal={showModal} setShowModal={setShowModal} note={showNote} />}
             </div>
         </>
     );

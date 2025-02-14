@@ -3,9 +3,13 @@ import "../componentCSS/alert.css";
 import context from '../contaxtApi/context';
 
 const AlertBox = () => {
-    const { alertMsg, alertType } = useContext(context);
+    let { alertMsg, alertType } = useContext(context);
 
+    // Optional: Set a default message or alert type if it's undefined or null
     if (!alertMsg) return null;
+
+    // Default to 'info' if alertType is null or undefined
+
     const alertClass = `alert alert-${alertType} alert-dismissible fade show mx-3 mt-2 p-2`;
 
     return (
