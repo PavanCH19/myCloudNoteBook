@@ -3,10 +3,8 @@ import axios from "axios";
 import NoteContext from "./context";
 import PropTypes from "prop-types";
 
-
 const NoteContextProvider = ({ children }) => {
     const [notes, setNote] = useState(null);
-
 
     // Set default base URL
     axios.defaults.baseURL = 'http://localhost:3000/api';
@@ -23,7 +21,6 @@ const NoteContextProvider = ({ children }) => {
     };
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
 
     useEffect(() => {
         if (isLoggedIn || localStorage.getItem("auth-token")) {
@@ -42,16 +39,13 @@ const NoteContextProvider = ({ children }) => {
             setAlertMsg(updateNote.data.msg);
             setAlertType('success');
         } catch (error) {
-            if (error.response.data.errors) {
-                const errorMessage = error.response.data.errors
+            const errorMessage = error.response?.data?.errors
+                ? error.response.data.errors
                     .map(error => `<strong>${error.msg}</strong> <span>(Field: ${error.path})</span>`)
-                    .join('<br/>');
-                setAlertMsg(errorMessage);
-                setAlertType('warning');
-            } else {
-                setAlertMsg("An error occurred while updating the note.");
-                setAlertType('danger');
-            }
+                    .join('<br/>')
+                : "An error occurred while updating the note.";
+            setAlertMsg(errorMessage);
+            setAlertType('warning');
             console.error(error);
         }
         fetchNotes();
@@ -76,30 +70,47 @@ const NoteContextProvider = ({ children }) => {
             setAlertMsg(addNote.data.msg);
             setAlertType('success');
         } catch (error) {
-            if (error.response.data.errors) {
-                const errorMessage = error.response.data.errors
+            const errorMessage = error.response?.data?.errors
+                ? error.response.data.errors
                     .map(error => `<strong>${error.msg}</strong> <span>(Field: ${error.path})</span>`)
-                    .join('<br/>');
-                setAlertMsg(errorMessage);
-                setAlertType('warning');
-            } else {
-                setAlertMsg("An error occurred while adding the note.");
-                setAlertType('danger');
-            }
+                    .join('<br/>')
+                : "An error occurred while adding the note.";
+            setAlertMsg(errorMessage);
+            setAlertType('danger');
             console.error(error);
         }
         fetchNotes();
     };
 
+    const handleCreateUser = async (formData) => {
+        try {
+            const createUser = await axios.post("/auth/createUser", formData);
+            setAlertMsg(createUser.data.msg || "User created successfully.");
+            setAlertType('success');
+            setIsLoggedIn(false); // Set to false as you might want the user to login again after creation
+        } catch (error) {
+            const errorMessage = error.response?.data?.errors
+                ? error.response.data.errors
+                    .map(error => `<strong>${error.msg}</strong> <span>(Field: ${error.path})</span>`)
+                    .join('<br/>')
+                : "An error occurred during user creation.";
+            setAlertMsg(errorMessage);
+            setAlertType('danger');
+            console.error("Error during user creation:", error.response?.data || error.message);
+        }
+    };
+
     const handleLogin = async (formData) => {
         try {
-            const response = await axios.post("http://localhost:3000/api/auth/login", { email: formData.email, password: formData.password });
-            setIsLoggedIn(false)
+            const response = await axios.post("/auth/login", { email: formData.email, password: formData.password });
+            setIsLoggedIn(false);
             localStorage.setItem("auth-token", response.data.token);
             console.log(localStorage.getItem("auth-token"));
             setIsLoggedIn(true);
             return true;
         } catch (error) {
+            setAlertMsg("Login failed. Please check your credentials.");
+            setAlertType('danger');
             console.error("Error during login:", error.response?.data || error.message);
         }
     };
@@ -107,7 +118,7 @@ const NoteContextProvider = ({ children }) => {
     return (
         <NoteContext.Provider value={{
             notes, setNote, editNote, setEditNote, handleNoteDelete, handleNoteUpdate, modalType,
-            setModalType, handleAddNote, alertMsg, alertType, handleLogin
+            setModalType, handleAddNote, alertMsg, alertType, handleLogin, handleCreateUser
         }}>
             {children}
         </NoteContext.Provider>

@@ -1,60 +1,60 @@
-/* Nav.css */
-
 /* Navbar Background and Container */
 .navbar-custom {
-    background-color: #343a40;
-    /* Dark background */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-    margin: 10px;
-    padding: 10px 20px;
-    /* Adjusted padding */
+    background-color: #587de4;
+    /* Dark Blue background */
+    box-shadow: 0 4px 8px rgba(30, 58, 138, 0.1);
+    /* Light blue shadow */
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+
+
     transition: all 0.3s ease;
 }
 
 .navbar-custom:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 12px rgba(30, 58, 138, 0.2);
+    /* Slightly darker blue shadow on hover */
 }
 
 /* Navbar Brand */
 .navbar-brand-custom {
-    color: #ffc107 !important;
-    /* Yellow color */
+    color: #f7f8fa !important;
+    /* Darker Blue for brand text */
     font-weight: bold;
     font-size: 1.8rem;
-    /* Adjusted font size */
     letter-spacing: 1px;
     transition: color 0.3s ease;
 }
 
-.navbar-brand-custom:hover {
-    color: #ffdd33 !important;
-}
+/* .navbar-brand-custom:hover {
+    color: #c3c4c8 !important;
+} */
 
 /* Navbar Link */
 .nav-link-custom {
-    color: #f8f9fa !important;
-    /* Light color */
-    font-size: 1rem;
+    color: #eaedf9 !important;
+    /* Darker Blue for links */
+    font-size: 1.2rem;
+    /* Increased font size */
     padding: 6px 15px;
-    /* Adjusted padding for better sizing */
     border-radius: 4px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-
-
 .nav-link-custom.active {
-    color: #ffc107 !important;
+    color: #f2fbac !important;
+    /* Even darker blue for active links */
     font-weight: bold;
 }
+
 
 /* Profile Image */
 .profile-image {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 2px solid #ffc107;
+    border: 2px solid #1e40af;
+    /* Dark Blue border */
     margin-left: 10px;
     transition: transform 0.3s ease;
 }
@@ -76,42 +76,36 @@
 
 /* Navbar Toggle Button */
 .navbar-toggler {
-    background-color: #ffc107 !important;
-    /* Yellow background */
+    background-color: #3b82f6 !important;
+    /* Light Blue background */
     border: none;
     padding: 6px 8px;
-    /* Reduced padding */
     border-radius: 50%;
     transition: background-color 0.3s ease;
     font-size: 1.2rem;
-    /* Reduced font size */
 }
 
 .navbar-toggler-icon {
-    background-color: #343a40;
-    /* Dark icon color */
+    background-color: #ffffff;
+    /* White icon for contrast */
     width: 18px;
-    /* Reduced width of the icon */
     height: 18px;
-    /* Reduced height of the icon */
 }
 
 /* Navbar Toggle Button Hover */
 .navbar-toggler:hover {
-    background-color: #ffdd33 !important;
-    /* Light yellow on hover */
+    background-color: #2563eb !important;
+    /* Medium Blue on hover */
 }
 
 /* Media Queries for Responsiveness */
 @media (max-width: 992px) {
     .navbar-custom {
         padding: 8px 15px;
-        /* Adjusted padding for medium screens */
     }
 
     .navbar-brand-custom {
         font-size: 1.7rem;
-        /* Adjusted font size */
     }
 
     .nav-link-custom {
@@ -127,12 +121,10 @@
 @media (max-width: 768px) {
     .navbar-custom {
         padding: 8px 12px;
-        /* Adjusted padding for smaller screens */
     }
 
     .navbar-brand-custom {
         font-size: 1.6rem;
-        /* Adjusted font size */
     }
 
     .nav-link-custom {
@@ -153,12 +145,10 @@
 @media (max-width: 576px) {
     .navbar-custom {
         padding: 6px 10px;
-        /* Adjusted padding for very small screens */
     }
 
     .navbar-brand-custom {
         font-size: 1.5rem;
-        /* Adjusted font size */
     }
 
     .nav-link-custom {

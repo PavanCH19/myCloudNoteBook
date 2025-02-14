@@ -5,7 +5,8 @@
     font-family: 'Montserrat', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #f0f4f8;
+    /* Lighter background for a clean look */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,7 +16,8 @@
 .containers {
     background-color: #fff;
     border-radius: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    /* Slightly lighter shadow */
     position: relative;
     overflow: hidden;
     width: 100%;
@@ -31,21 +33,39 @@
     line-height: 20px;
     letter-spacing: 0.3px;
     margin: 20px 0;
+    color: #d7d4d4;
+    /* Lighter gray color for the text */
 }
+
 
 .containers span {
     font-size: 12px;
+    color: #555;
+    /* Slightly lighter gray for secondary text */
 }
 
 .containers a {
-    color: #333;
+    color: #0288d1;
+    /* Vibrant blue for links */
     font-size: 13px;
     text-decoration: none;
     margin: 15px 0 10px;
+    transition: all 0.3s ease;
+    /* Smooth transition for hover effect */
 }
 
+/* Hover effect for the "Forgot Password" link */
+.containers a:hover {
+    color: #01579b;
+    /* Darker blue on hover */
+    text-decoration: underline;
+    /* Underline the link on hover */
+}
+
+
 .containers button {
-    background-color: #02052c;
+    background-color: #0288d1;
+    /* Blue background for buttons */
     color: #fff;
     font-size: 14px;
     padding: 12px 50px;
@@ -56,11 +76,31 @@
     text-transform: uppercase;
     margin-top: 10px;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
+/* Hover effect for buttons */
+.containers button:hover {
+    background-color: #0277bd;
+    /* Slightly darker blue */
+    transform: scale(1.05);
+    /* Slightly enlarge the button */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    /* Add a shadow around the button */
+}
+
+/* Hidden button */
 .containers button.hidden {
     background-color: transparent;
     border-color: #fff;
+}
+
+/* Hover effect for hidden button */
+.containers button.hidden:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    /* Light background on hover */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    /* Subtle shadow on hover */
 }
 
 .containers form {
@@ -74,7 +114,8 @@
 }
 
 .containers input {
-    background-color: #eee;
+    background-color: #f1f7f7;
+    /* Light blue background for inputs */
     border: none;
     margin: 10px 0;
     padding: 12px 15px;
@@ -82,7 +123,27 @@
     border-radius: 8px;
     width: 100%;
     outline: none;
+    color: #021d2e;
+    /* Darker blue text for inputs */
+    transition: all 0.3s ease;
+    /* Smooth transition for border change */
+
 }
+
+/* Add border on focus */
+.containers input:focus {
+    border: 2px solid #868484;
+    /* Light gray/whitish border */
+    border-radius: 8px;
+    /* Rounded corners */
+    box-shadow: 0 0 8px rgba(224, 224, 224, 0.6);
+    /* Soft white glow effect */
+    transition: all 0.3s ease-in-out;
+    /* Smooth transition for the border and shadow */
+}
+
+
+
 
 .form-container {
     position: absolute;
@@ -135,7 +196,7 @@
 }
 
 .social-icons a {
-    border: 1px solid #ccc;
+    border: 1px solid #0288d1;
     border-radius: 20%;
     display: inline-flex;
     justify-content: center;
@@ -144,7 +205,24 @@
     width: 45px;
     height: 45px;
     font-size: 20px;
+    color: #0288d1;
+    /* Social icon color matching the theme */
+    transition: all 0.3s ease;
+    /* Smooth transition for hover effect */
 }
+
+/* Hover effect for social icons */
+.social-icons a:hover {
+    background-color: #0288d1;
+    /* Blue background on hover */
+    color: #fff;
+    /* White color for the icon */
+    border-color: #0288d1;
+    /* Ensure the border stays blue */
+    transform: scale(1.1);
+    /* Slightly enlarge the icon */
+}
+
 
 .toggle-container {
     position: absolute;
@@ -164,9 +242,11 @@
 }
 
 .toggle {
-    background-color: #010d48;
+    background-color: #01579b;
+    /* Darker blue for the toggle */
     height: 100%;
-    background: linear-gradient(to right, #0223a5, #010d48);
+    background: linear-gradient(to right, #0277bd, #01579b);
+    /* Gradient background for toggle */
     color: #fff;
     position: relative;
     left: -100%;

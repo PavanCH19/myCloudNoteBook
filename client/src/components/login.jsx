@@ -5,7 +5,7 @@ import context from "../contaxtApi/context";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-    const { handleLogin } = useContext(context);
+    const { handleLogin, handleCreateUser } = useContext(context);
     const [isActive, setIsActive] = useState(false);
     const [formData, setFormData] = useState({
         name: "",
@@ -35,6 +35,7 @@ function Login() {
     const handleRegistrationSubmit = (e) => {
         e.preventDefault();
         console.log(formData);
+        handleCreateUser(formData);
     };
 
     const handleLoginSubmit = async (e) => {
