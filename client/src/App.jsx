@@ -4,6 +4,7 @@ import Home from './components/Home';
 import Nav from './components/Nav';
 import Login from './components/login';
 import './App.css';
+import UserDashboard from './components/userDashboard';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NoteContextProvider from './contaxtApi/NoteContextProvider';
@@ -20,6 +21,7 @@ const App = () => {
             <Route path='/About' element={<About />} />
             <Route path='/Login' element={<Login />} />
             <Route path='/password-reset' element={<ResetPassword />} />
+            <Route path='/userDashboard' element={<UserDashboard />} />
           </Routes>
           <Footer />
         </Router>

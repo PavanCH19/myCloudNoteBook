@@ -15,6 +15,7 @@ const Home = () => {
         setSubmittedQuery(searchQuery); // Set submitted query when button is clicked
     };
 
+
     return (
         <div className="home-container">
             {

@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 // import { FaSearch } from "react-icons/fa"; // Importing the FaSearch icon
 import "../componentCSS/nav.css"; // Importing the external CSS file
 import context from "../contaxtApi/context";
@@ -7,6 +7,8 @@ import { useContext } from "react";
 const Nav = () => {
     const location = useLocation();
     const { isLoggedIn, handleLogout, user } = useContext(context)
+    const navigate = useNavigate();
+
 
     const getNavLinkClass = (path) => {
         return location.pathname === path ? "nav-link nav-link-custom active" : "nav-link nav-link-custom";
@@ -57,11 +59,12 @@ const Nav = () => {
                         {/* User Profile or Login Button */}
                         {user ? (
                             <>
-                                <span className="text-light me-2 fs-5">{user.username}</span>
+                                <span className="text-light me-2 fs-5" onClick={() => navigate('/userDashboard')}>{user.name}</span>
                                 <img
                                     src={user.profileImage}
                                     alt="Profile"
                                     className="profile-image"
+                                    onClick={() => navigate('/userDashboard')}
                                 />
                             </>
                         ) : (

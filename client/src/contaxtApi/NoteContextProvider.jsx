@@ -144,18 +144,20 @@ const NoteContextProvider = ({ children }) => {
     };
 
     const [user, setUser] = useState({
-        username: "",
+        name: "",
+        email: "",
         profileImage: "../../public/vite.svg" // Updated to use absolute path
     });
 
     const getUser = async () => {
         try {
             const res = await axios.post('/auth/getUser');
-            const useremail = res.data.user.email;
+            //const userName = res.data.user.name;
             const userProfileImage = res.data.user.profileImage || "../../public/vite.svg"; // Use the profile image returned by API
 
             setUser({
-                username: useremail,
+                name: res.data.user.name,
+                email: res.data.user.email,
                 profileImage: userProfileImage
             });
         } catch (error) {
@@ -172,6 +174,10 @@ const NoteContextProvider = ({ children }) => {
         });
     }
 
+    const handleUpdateUser = (formData) => {
+        console.log(formData)
+    }
+
 
     useEffect(() => {
         if (alertMsg && alertType) {
@@ -185,7 +191,7 @@ const NoteContextProvider = ({ children }) => {
 
     return (
         <NoteContext.Provider value={{
-            notes, setNote, editNote, setEditNote, handleNoteDelete, handleNoteUpdate, modalType,
+            notes, setNote, editNote, setEditNote, handleNoteDelete, handleNoteUpdate, modalType, handleUpdateUser,
             setModalType, handleAddNote, alertMsg, alertType, handleLogin, handleCreateUser, isLoggedIn, user, handleLogout
         }}>
             {children}
