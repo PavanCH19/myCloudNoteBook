@@ -22,11 +22,35 @@ const NoteContextProvider = ({ children }) => {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    const token = localStorage.getItem("auth-token");
+
+    // Function to check if the token is expired
+    const isTokenExpired = (token) => {
+        if (!token) return true; // If no token, treat it as expired
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT payload
+            const expiry = payload.exp * 1000; // Convert expiry time to milliseconds
+            return Date.now() > expiry; // Compare with current time
+        } catch (error) {
+            console.log(error)
+            return true; // If decoding fails, consider it expired
+        }
+    };
+
     useEffect(() => {
-        if (isLoggedIn || localStorage.getItem("auth-token")) {
+        isTokenExpired(token);
+        if (isLoggedIn || token) {
             fetchNotes();
         }
+        if (token && !isTokenExpired(token)) {
+            setIsLoggedIn(true); // Set user as logged in
+            getUser();
+        } else {
+            localStorage.removeItem('auth-token'); // Remove expired token
+            setIsLoggedIn(false);
+        }
     }, [isLoggedIn]);
+
 
     const [editNote, setEditNote] = useState(null);
     const [modalType, setModalType] = useState("");
@@ -105,15 +129,49 @@ const NoteContextProvider = ({ children }) => {
             const response = await axios.post("/auth/login", { email: formData.email, password: formData.password });
             setIsLoggedIn(false);
             localStorage.setItem("auth-token", response.data.token);
-            console.log(localStorage.getItem("auth-token"));
+            axios.defaults.headers.common["auth-token"] = response.data.token;
+            await fetchNotes();
             setIsLoggedIn(true);
-            return true;
+            window.location.href = "/";
+            // console.log('asdfasdf', response.status)
+
         } catch (error) {
             setAlertMsg("Login failed. Please check your credentials.");
             setAlertType('danger');
             console.error("Error during login:", error.response?.data || error.message);
+
         }
     };
+
+    const [user, setUser] = useState({
+        username: "",
+        profileImage: "../../public/vite.svg" // Updated to use absolute path
+    });
+
+    const getUser = async () => {
+        try {
+            const res = await axios.post('/auth/getUser');
+            const useremail = res.data.user.email;
+            const userProfileImage = res.data.user.profileImage || "../../public/vite.svg"; // Use the profile image returned by API
+
+            setUser({
+                username: useremail,
+                profileImage: userProfileImage
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem("auth-token");
+        setIsLoggedIn(false);
+        setUser({
+            username: "",
+            profileImage: "../../public/vite.svg"
+        });
+    }
+
 
     useEffect(() => {
         if (alertMsg && alertType) {
@@ -128,7 +186,7 @@ const NoteContextProvider = ({ children }) => {
     return (
         <NoteContext.Provider value={{
             notes, setNote, editNote, setEditNote, handleNoteDelete, handleNoteUpdate, modalType,
-            setModalType, handleAddNote, alertMsg, alertType, handleLogin, handleCreateUser
+            setModalType, handleAddNote, alertMsg, alertType, handleLogin, handleCreateUser, isLoggedIn, user, handleLogout
         }}>
             {children}
         </NoteContext.Provider>

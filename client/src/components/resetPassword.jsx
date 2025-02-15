@@ -8,7 +8,8 @@ export default function ResetPassword() {
         email: "",
         otp: "",
         newPassword: "",
-        confirmPassword: ""
+        confirmPassword: "",
+        resetLink: ""
     });
     const navigate = useNavigate();
     const location = useLocation();

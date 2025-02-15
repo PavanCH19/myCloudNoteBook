@@ -1,12 +1,14 @@
 import Note from "./Note";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import "../componentCSS/home.css"; // Import the CSS file
+import context from "../contaxtApi/context";
 
 const Home = () => {
-    const [isLoggedIn] = useState(true);
+    const { isLoggedIn } = useContext(context)
     const [searchQuery, setSearchQuery] = useState("");
     const [submittedQuery, setSubmittedQuery] = useState("");
+
 
     // Function to handle search submission
     const handleSearch = () => {

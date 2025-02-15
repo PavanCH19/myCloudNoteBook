@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import "../componentCSS/login.css";
 import context from "../contaxtApi/context";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Login() {
     const { handleLogin, handleCreateUser } = useContext(context);
@@ -11,8 +11,6 @@ function Login() {
         email: "",
         password: "",
     });
-
-    const navigate = useNavigate();
 
     const handleRegisterClick = () => {
         setIsActive(true);
@@ -38,9 +36,7 @@ function Login() {
 
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
-        if (handleLogin(formData)) {
-            navigate("/");
-        }
+        handleLogin(formData)
     };
 
     return (

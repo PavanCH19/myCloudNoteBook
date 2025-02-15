@@ -1,14 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
 // import { FaSearch } from "react-icons/fa"; // Importing the FaSearch icon
 import "../componentCSS/nav.css"; // Importing the external CSS file
+import context from "../contaxtApi/context";
+import { useContext } from "react";
 
 const Nav = () => {
     const location = useLocation();
-
-    const user = {
-        username: "JohnDoesssssssssssssssssssssssssssssssssssssss",
-        profileImage: "../../public/vite.svg"
-    };
+    const { isLoggedIn, handleLogout, user } = useContext(context)
 
     const getNavLinkClass = (path) => {
         return location.pathname === path ? "nav-link nav-link-custom active" : "nav-link nav-link-custom";
@@ -48,49 +46,14 @@ const Nav = () => {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className={getNavLinkClass("/Login")} to="/Login">
-                                Login
-                            </Link>
+                            {isLoggedIn ? <Link className={getNavLinkClass("/Login")} onClick={handleLogout} to="/Login">
+                                Logout
+                            </Link> : ""}
                         </li>
                     </ul>
 
                     {/* Right-aligned Section for Search Bar & User Profile */}
                     <div className="navbar-right">
-
-                        {/* Search Bar (visible on large screens)
-                        <div className="input-group input-group-custom d-none d-lg-flex me-3">
-                            <input
-                                type="search"
-                                className="form-control rounded-pill border-0 py-2 ps-3 text-dark"
-                                placeholder="Search..."
-                                aria-label="Search"
-                            />
-                            <button
-                                className="btn btn-search ms-2"
-                                type="button"
-                            >
-                                <FaSearch />
-                            </button>
-                        </div> */}
-
-                        {/* Mobile Search Bar (visible on small screens)
-                        <div className="d-lg-none">
-                            <button
-                                className="mobile-search-button"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#searchBar"
-                            >
-                                <FaSearch />
-                            </button>
-                            <div id="searchBar" className="collapse">
-                                <input
-                                    type="search"
-                                    className="form-control mobile-search-bar"
-                                    placeholder="Search..."
-                                />
-                            </div>
-                        </div> */}
-
                         {/* User Profile or Login Button */}
                         {user ? (
                             <>
