@@ -27,6 +27,7 @@ router.post('/password-reset-request', async (req, res) => {
     // Generate JWT Token for password reset link
     const resetToken = generateJWTToken(email);
     resetTokenStore[email] = resetToken;
+    console.log(resetLink)
 
     resetLink = resetLink + resetToken;
 

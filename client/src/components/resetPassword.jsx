@@ -9,7 +9,7 @@ export default function ResetPassword() {
         otp: "",
         newPassword: "",
         confirmPassword: "",
-        resetLink: ""
+        token: ""
     });
     const navigate = useNavigate();
     const location = useLocation();
@@ -22,8 +22,13 @@ export default function ResetPassword() {
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
         const stepParam = queryParams.get('step');
+        const emailParam = queryParams.get('email');
+        const tokenParam = queryParams.get('token')
         if (stepParam) {
             setStep(Number(stepParam));  // Set the step based on the query parameter
+        }
+        if (emailParam, tokenParam) {
+            setResetData((prevData) => ({ ...prevData, email: emailParam, token: tokenParam }));
         }
     }, [location.search]);
 
@@ -37,8 +42,10 @@ export default function ResetPassword() {
 
     const handleSendMail = async (e) => {
         e.preventDefault();
+        const resetLink = `http://localhost:5173/password-reset?step=2&email=${resetData.email}&token=`;
+
         try {
-            const res = await axios.post('/password-reset-request', { email: resetData.email });
+            const res = await axios.post('/password-reset-request', { email: resetData.email, resetLink });
             if (res.status === 200) {
                 setStep(2);
             }
@@ -49,7 +56,7 @@ export default function ResetPassword() {
 
     const handleVerifyOtp = async (e) => {
         e.preventDefault();
-        console.log({ email: resetData.email, otp: resetData.otp })
+
         try {
             const res = await axios.post('/verify-otp', { email: resetData.email, otp: resetData.otp });
             if (res.status === 200) {
@@ -59,6 +66,7 @@ export default function ResetPassword() {
             console.error("Error verifying OTP:", error);
         }
     };
+
 
     const handleResetPassword = async (e) => {
         e.preventDefault();
@@ -70,7 +78,8 @@ export default function ResetPassword() {
         try {
             const res = await axios.post('/reset-password', {
                 email: resetData.email,
-                newPassword: resetData.newPassword
+                newPassword: resetData.newPassword,
+                token: resetData.token
             });
             if (res.status === 200) {
                 alert("Password reset successful!");
